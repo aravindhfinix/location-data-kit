@@ -4,10 +4,11 @@ const isNode = typeof window === 'undefined';
 const loadData = async (url) => {
   if (isNode) {
     // Node.js environment
-    const fs = require('fs');
-    const path = require('path');
-    const filePath = path.join(__dirname, 'data', url);
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    // const fs = require('fs');
+    // const path = require('path');
+    // const filePath = path.join(__dirname, 'data', url);
+    // return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    return console.log('node running')
   } else {
     // Browser environment
     try {
