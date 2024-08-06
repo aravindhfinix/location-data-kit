@@ -17,6 +17,7 @@ const loadData = async (url) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      console.log(response)
       return response.json();
     } catch (error) {
       console.error('Error loading data:', error);
