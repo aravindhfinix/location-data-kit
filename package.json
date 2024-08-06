@@ -12,7 +12,13 @@
     "states",
     "cities",
     "geo",
-    "geography"
+    "geography",
+    "json",
+    "search",
+    "filtering",
+    "api",
+    "node.js", 
+    "geocode" 
   ],
   "author": "aravindh",
   "license": "MIT",
