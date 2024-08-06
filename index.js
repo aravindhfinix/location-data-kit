@@ -1,16 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-
-// Load JSON data from files
-const loadData = (fileName) => {
-  const filePath = path.join(__dirname, 'data', fileName);
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-};
-
-// Data loading
-const countries = loadData('countries.json');
-const states = loadData('states.json');
-const cities = loadData('cities.json');
+const countries = require('./data/countries.js');
+const states = require('./data/states');
+const cities = require('./data/cities');
 
 // Helper function to create case-insensitive regex
 const createRegex = (str) => new RegExp(str, 'i');
