@@ -107,8 +107,8 @@ const fetchCitiesByState = async (stateCode, search = null) => {
   return result;
 };
 
-// Exporting functions (adapt this based on environment)
-if (isNode) {
+// For Node.js
+if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     fetchAllCountries,
     fetchAllStates,
@@ -116,7 +116,10 @@ if (isNode) {
     fetchStatesByCountry,
     fetchCitiesByState
   };
-} else {
+}
+
+// For Browser
+if (typeof window !== 'undefined') {
   window.locationDataKit = {
     fetchAllCountries,
     fetchAllStates,
