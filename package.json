@@ -1,6 +1,6 @@
 {
   "name": "location-data-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,8 +17,8 @@
     "search",
     "filtering",
     "api",
-    "node.js", 
-    "geocode" 
+    "node.js",
+    "geocode"
   ],
   "author": "aravindh",
   "license": "MIT",
