@@ -1,62 +1,12 @@
-const isNode = typeof window === 'undefined';
-
-// Load JSON data depending on the environment
-const loadData = async (url) => {
-  if (isNode) {
-    // Node.js environment
-    // const fs = require('fs');
-    // const path = require('path');
-    // const filePath = path.join(__dirname, 'data', url);
-    // return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    return console.log('node running')
-  } else {
-    // Browser environment
-    try {
-      console.log(url)
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      console.log(response)
-      return response.json();
-    } catch (error) {
-      console.error('Error loading data:', error);
-      throw error;
-    }
-  }
-};
-
-// Define file paths based on the environment
-const getPath = (fileName) => isNode
-  ? fileName // Use the relative path in Node.js
-  : `/data/${fileName}`; // Use the URL path in the browser
-
-let countries = [];
-let states = [];
-let cities = [];
-
-// Load data and store it
-const initializeData = async () => {
-  try {
-    const [countriesData, statesData, citiesData] = await Promise.all([
-      loadData(getPath('countries.json')),
-      loadData(getPath('states.json')),
-      loadData(getPath('cities.json'))
-    ]);
-    countries = countriesData;
-    states = statesData;
-    cities = citiesData;
-  } catch (error) {
-    console.error('Error loading data:', error);
-  }
-};
+const countries = require('./data/countries.json');
+const states = require('./data/states.json');
+const cities = require('./data/cities.json');
 
 // Helper function to create case-insensitive regex
 const createRegex = (str) => new RegExp(str, 'i');
 
 // Fetch all countries with optional search
-const fetchAllCountries = async (search = null) => {
-  await initializeData();
+const fetchAllCountries = (search = null) => {
   let result = countries;
   if (search) {
     const regex = createRegex(search);
@@ -66,8 +16,7 @@ const fetchAllCountries = async (search = null) => {
 };
 
 // Fetch all states with optional search
-const fetchAllStates = async (search = null) => {
-  await initializeData();
+const fetchAllStates = (search = null) => {
   let result = states;
   if (search) {
     const regex = createRegex(search);
@@ -77,8 +26,7 @@ const fetchAllStates = async (search = null) => {
 };
 
 // Fetch all cities with optional search
-const fetchAllCities = async (search = null) => {
-  await initializeData();
+const fetchAllCities = (search = null) => {
   let result = cities;
   if (search) {
     const regex = createRegex(search);
@@ -88,8 +36,7 @@ const fetchAllCities = async (search = null) => {
 };
 
 // Fetch states by country code with optional search
-const fetchStatesByCountry = async (countryCode, search = null) => {
-  await initializeData();
+const fetchStatesByCountry = (countryCode, search = null) => {
   let result = states.filter(state => state.countryCode === countryCode);
   if (search) {
     const regex = createRegex(search);
@@ -99,8 +46,7 @@ const fetchStatesByCountry = async (countryCode, search = null) => {
 };
 
 // Fetch cities by state code with optional search
-const fetchCitiesByState = async (stateCode, search = null) => {
-  await initializeData();
+const fetchCitiesByState = (stateCode, search = null) => {
   let result = cities.filter(city => city.stateCode === stateCode);
   if (search) {
     const regex = createRegex(search);
@@ -109,24 +55,11 @@ const fetchCitiesByState = async (stateCode, search = null) => {
   return result;
 };
 
-// For Node.js
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    fetchAllCountries,
-    fetchAllStates,
-    fetchAllCities,
-    fetchStatesByCountry,
-    fetchCitiesByState
-  };
-}
-
-// For Browser
-if (typeof window !== 'undefined') {
-  window.locationDataKit = {
-    fetchAllCountries,
-    fetchAllStates,
-    fetchAllCities,
-    fetchStatesByCountry,
-    fetchCitiesByState
-  };
-}
+// Exporting functions
+module.exports = {
+  fetchAllCountries,
+  fetchAllStates,
+  fetchAllCities,
+  fetchStatesByCountry,
+  fetchCitiesByState
+};
